@@ -1,8 +1,0 @@
-{
-  "name": "Plan With Malik - Insurance & Financial Advisor",
-  "description": "Independent life, health, and financial services advisory helping individuals, families, and businesses across Canada protect what they've built.",
-  "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
-}
