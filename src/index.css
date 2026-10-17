@@ -1,14 +1,189 @@
 @import "tailwindcss";
 
 @layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
   body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow-x: hidden;
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: #4A5568;
     background-color: #FFFFFF;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, .font-serif-display {
     font-family: 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
+  }
+
+  img,
+  svg,
+  video,
+  canvas {
+    max-width: 100%;
+  }
+
+  img {
+    height: auto;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    max-width: 100%;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent long email addresses, URLs and other unbroken content from
+     creating a wider-than-screen layout on phones. */
+  p,
+  span,
+  a,
+  button,
+  label,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Mobile layout safeguards */
+@media (max-width: 767px) {
+  /* Keep the page inside the viewport even when a component contains a
+     large decorative element or a long piece of content. */
+  section,
+  header,
+  footer,
+  main,
+  nav,
+  article,
+  aside {
+    max-width: 100%;
+  }
+
+  /* Give the main page containers a little more usable breathing room on
+     narrow phones while preserving the existing desktop spacing. */
+  .max-w-7xl {
+    width: 100%;
+  }
+
+  /* Hero typography should scale down smoothly rather than relying on
+     desktop-sized text at narrow widths. */
+  #home h1 {
+    font-size: clamp(2rem, 9vw, 2.5rem);
+    line-height: 1.12;
+  }
+
+  #home p {
+    overflow-wrap: anywhere;
+  }
+
+  /* The three hero trust items become easier to scan on small screens. */
+  #home .grid.grid-cols-1.sm\\:grid-cols-3 > div {
+    min-width: 0;
+  }
+
+  /* Make the quick quote form comfortable on touch screens. */
+  #hero-quick-quote-card input,
+  #hero-quick-quote-card select,
+  #hero-quick-quote-card button {
+    min-height: 44px;
+  }
+
+  #hero-quick-quote-card h3 {
+    min-width: 0;
+  }
+
+  /* Keep floating hero badges inside the image area on very narrow phones. */
+  #home .absolute.-top-3.-left-3 {
+    left: 0.25rem;
+    top: -0.25rem;
+  }
+
+  /* Avoid oversized decorative circles affecting the mobile composition. */
+  #home > .absolute {
+    max-width: 75vw;
+    max-height: 75vw;
+  }
+}
+
+/* Extra-small phones such as 320px to 375px wide. */
+@media (max-width: 380px) {
+  #top-utility-bar {
+    font-size: 10px;
+  }
+
+  #top-utility-bar > div {
+    gap: 0.35rem;
+  }
+
+  #main-site-header > div {
+    gap: 0.5rem;
+  }
+
+  #brand-logo-link {
+    gap: 0.5rem;
+  }
+
+  #brand-logo-link > div:first-child {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  #brand-logo-link .text-lg {
+    font-size: 0.95rem;
+  }
+
+  #brand-logo-link span:last-child {
+    font-size: 8px;
+    letter-spacing: 0.06em;
+  }
+
+  #home .max-w-7xl {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  #hero-quick-quote-card {
+    padding: 1rem;
+  }
+
+  #hero-quick-quote-card .flex.items-center.justify-between {
+    align-items: flex-start;
+  }
+
+  #hero-quick-quote-card .uppercase {
+    white-space: normal;
+    text-align: center;
   }
 }
 
@@ -26,4 +201,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
 }
-
