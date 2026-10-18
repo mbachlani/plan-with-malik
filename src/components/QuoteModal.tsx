@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, ShieldCheck, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
 import { SERVICES_DATA } from '../data/content';
 import { QuoteFormData } from '../types';
@@ -31,6 +31,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const formScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (initialServiceId) {
@@ -39,7 +40,12 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
     if (initialData) {
       setFormData(prev => ({ ...prev, ...initialData }));
     }
-    if (isOpen) setIsSuccess(false);
+    if (isOpen) {
+      setIsSuccess(false);
+      requestAnimationFrame(() => {
+        if (formScrollRef.current) formScrollRef.current.scrollTop = 0;
+      });
+    }
   }, [initialServiceId, initialData, isOpen]);
 
   if (!isOpen) return null;
@@ -55,12 +61,12 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto overscroll-none bg-[#0B1F35]/80 backdrop-blur-xs">
-      <div className="fixed inset-0 -z-10" onClick={onClose} aria-hidden="true" />
+    <div className="fixed inset-0 z-50 bg-[#0B1F35]/80 backdrop-blur-xs overscroll-none">
+      <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative min-h-[100dvh] w-full flex items-start sm:items-center justify-center p-0 sm:p-4 md:p-6">
-        <div className="relative bg-white w-full max-w-2xl min-h-[100dvh] sm:min-h-0 sm:max-h-[calc(100dvh-2rem)] rounded-none sm:rounded-2xl shadow-2xl border border-[#E2E5EA] z-10 animate-in zoom-in-95 duration-200 min-w-0 overflow-y-auto overscroll-contain">
-          <div className="sticky top-0 z-20 bg-[#0F2A47] text-white p-4 sm:p-6 md:p-8 flex items-start justify-between gap-3 border-b-4 border-[#C9A227] min-w-0 shadow-sm">
+      <div className="relative h-[100dvh] w-full flex items-start sm:items-center justify-center p-0 sm:p-4 md:p-6">
+        <div className="relative bg-white w-full max-w-2xl h-[100dvh] sm:h-auto sm:max-h-[calc(100dvh-2rem)] rounded-none sm:rounded-2xl shadow-2xl border border-[#E2E5EA] z-10 animate-in zoom-in-95 duration-200 min-w-0 overflow-hidden flex flex-col">
+          <div className="shrink-0 z-20 bg-[#0F2A47] text-white p-4 sm:p-6 md:p-8 flex items-start justify-between gap-3 border-b-4 border-[#C9A227] min-w-0 shadow-sm">
             <div className="min-w-0 pr-1">
               <div className="inline-flex max-w-full items-center gap-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#C9A227] mb-1">
                 <Sparkles className="w-3.5 h-3.5 shrink-0" />
@@ -78,13 +84,16 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
               onClick={onClose}
               aria-label="Close quote form"
               type="button"
-              className="w-10 h-10 rounded-full bg-white/15 text-white hover:bg-white/25 active:bg-white/30 flex items-center justify-center transition-colors shrink-0 border border-white/20"
+              className="w-10 h-10 rounded-full bg-white/15 text-white hover:bg-white/25 active:bg-white/30 flex items-center justify-center transition-colors shrink-0 border border-white/20 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          <div className="p-4 sm:p-6 md:p-8">
+          <div
+            ref={formScrollRef}
+            className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-6 md:p-8 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:pb-6 md:pb-8"
+          >
             {isSuccess ? (
               <div className="text-center py-6 sm:py-8 space-y-4">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#C9A227]/20 text-[#0F2A47] flex items-center justify-center mx-auto">
